@@ -16,9 +16,6 @@ resource "null_resource" "webConf" {
     command = "ansible-navigator run web.yml -i inventory --ee false --mode stdout"
   }
 
-
-
-
   provisioner "local-exec" {
     command = "curl http://${aws_instance.web.public_ip}"
   }
