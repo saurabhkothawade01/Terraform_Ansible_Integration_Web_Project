@@ -1,0 +1,23 @@
+---
+- hosts: web
+  vars:
+    - apache_package: "httpd"
+    - html_file_path: "/var/www/html/index.html"
+    - apache_service: "httpd"
+  tasks:
+    - name: Install Apache
+      yum:
+        name: "{{ apache_package }}"
+        state: present
+
+    - name: Copy HTML file
+      copy:
+        content: "Hii, Terraform!!!"
+        dest: "{{ html_file_path }}"
+      notify: Restart Apache
+
+  handlers:
+    - name: Restart Apache
+      service:
+        name: "{{ apache_service }}"
+        state: restarted
